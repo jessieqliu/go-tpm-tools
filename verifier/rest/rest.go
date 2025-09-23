@@ -151,15 +151,17 @@ func (c *restClient) VerifyConfidentialSpace(ctx context.Context, request verifi
 		return nil, fmt.Errorf("neither TPM nor TDX attestation is present")
 	}
 
-	csReq := convertCSRequestToREST(request)
-	csReq.Challenge = request.Challenge.Name
+	return c.VerifyAttestation(ctx, request)
 
-	response, err := c.v1Client.VerifyConfidentialSpace(ctx, csReq)
-	if err != nil {
-		return nil, fmt.Errorf("calling v1.VerifyConfidentialSpace in %v: %w", c.location.LocationId, err)
-	}
+	// csReq := convertCSRequestToREST(request)
+	// csReq.Challenge = request.Challenge.Name
 
-	return convertCSResponseFromREST(response), nil
+	// response, err := c.v1Client.VerifyConfidentialSpace(ctx, csReq)
+	// if err != nil {
+	// 	return nil, fmt.Errorf("calling v1.VerifyConfidentialSpace in %v: %w", c.location.LocationId, err)
+	// }
+
+	// return convertCSResponseFromREST(response), nil
 }
 
 var encoding = base64.StdEncoding
